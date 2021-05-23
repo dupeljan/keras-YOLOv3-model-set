@@ -29,6 +29,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 optimize_tf_gpu(tf, K)
 
+DATASET_PATH_ENV_KEY = 'KERAS_YOLO_DATASET_PATH'
+
 
 def annotation_parse(annotation_lines, class_names):
     '''
@@ -380,7 +382,7 @@ def get_prediction_class_records(model, model_format, annotation_records, anchor
     pred_classes_records = OrderedDict()
     pbar = tqdm(total=len(annotation_records), desc='Eval model')
     for (image_name, gt_records) in annotation_records.items():
-        image = Image.open(image_name)
+        image = Image.open(os.path.join(os.getenv(DATASET_PATH_ENV_KEY), image_name))
         if image.mode != 'RGB':
             image = image.convert('RGB')
         image_array = np.array(image, dtype='uint8')
