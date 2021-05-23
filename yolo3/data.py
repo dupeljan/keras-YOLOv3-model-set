@@ -2,6 +2,7 @@
 # -*- coding=utf-8 -*-
 """training data generation functions."""
 import numpy as np
+import os
 import random, math
 from PIL import Image
 from tensorflow.keras.utils import Sequence
@@ -9,10 +10,14 @@ from common.data_utils import normalize_image, letterbox_resize, random_resize_c
 from common.utils import get_multiscale_list
 
 
+
+DATASET_PATH_ENV_KEY = 'KERAS_YOLO_DATASET_PATH'
+
+
 def get_ground_truth_data(annotation_line, input_shape, augment=True, max_boxes=100):
     '''random preprocessing for real-time data augmentation'''
     line = annotation_line.split()
-    image = Image.open(line[0])
+    image = Image.open(os.path.join(os.getenv(DATASET_PATH_ENV_KEY), line[0]))
     image_size = image.size
     model_input_size = tuple(reversed(input_shape))
     boxes = np.array([np.array(list(map(int,box.split(',')))) for box in line[1:]])

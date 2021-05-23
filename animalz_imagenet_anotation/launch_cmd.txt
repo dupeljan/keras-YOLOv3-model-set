@@ -1,0 +1,3 @@
+python train.py --model_type=yolo4_mobilenetv2 --anchors_path=conf
+igs/yolo4_anchors.txt --annotation_file=animalz_imagenet_anotation/train.txt --val_annotation_file=animalz_imagenet_anotation/val.txt --classes_path=animalz_imagenet_anotation/map_classes.txt --model_image_size=416x416 --multiscale --rescale_interval=50 --learning_rate=0.001 --transfer_epoch=10 --init_epoch=0 --total_epoch=100 --eval_online --eval_epoch_interval=5 --save_eval_checkpoint --gpu_num=3 --batch_size 32 --decay_type exponential --save_eval_checkpoint
+mobilenetv2 weights downlods from the keras app, so command above is all you neet to launch training
